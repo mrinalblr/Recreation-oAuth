@@ -13,14 +13,14 @@ import com.mrinal.model.User;
 
 public class CustomUserDetails implements UserDetails{
 
-	private String userName;
+	private String emailId;
 	private String password;
 	Collection<? extends GrantedAuthority> authorities;
 	
 	
 	public CustomUserDetails(User byUserName) {
 		super();
-		this.userName = byUserName.getEmailId();
+		this.emailId = byUserName.getEmailId();
 		this.password = byUserName.getPassword();
 		
 		List<GrantedAuthority> auths = new ArrayList<>();
@@ -45,7 +45,7 @@ public class CustomUserDetails implements UserDetails{
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return userName;
+		return emailId;
 	}
 
 	@Override

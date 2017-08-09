@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,9 +19,10 @@ import com.mrinal.repo.UserRepo;
 import com.mrinal.service.UserService;
 
 
-@Configuration
-@EnableAutoConfiguration
-@ComponentScan({"com.mrinal.controller","com.mrinal.service"})
+//@Configuration
+//@EnableAutoConfiguration
+//@ComponentScan({"com.mrinal.controller","com.mrinal.service"})
+@SpringBootApplication
 public class RecreationApplication {
 
 	public static void main(String[] args) {
@@ -48,7 +49,7 @@ public class RecreationApplication {
      */
 	private UserDetailsService userDetailsService(final UserRepo repository) {
 		
-		User u = (User)repository.findByemailId("mrinal.deo2@gmail.com");
+		User u = (User)repository.findByemailId("test");
 		System.out.println("uname : "+u.getEmailId());
 		System.out.println("password : "+u.getPassword());
 		

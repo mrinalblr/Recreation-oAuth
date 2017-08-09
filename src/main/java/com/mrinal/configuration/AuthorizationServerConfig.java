@@ -32,11 +32,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		// TODO Auto-generated method stub
 		clients.inMemory().withClient("my-trusted-client")
-		       .authorizedGrantTypes("password","refresh_token")
-		       .authorities("ADMIN")
+		       .authorizedGrantTypes("authorization_code","password","refresh_token")
+		       .authorities("ADMIN","ACTUATOR")
 		       .scopes("read","write","trust")
-		       .accessTokenValiditySeconds(30)
-		       .refreshTokenValiditySeconds(60)
+		       .accessTokenValiditySeconds(120)
+		       .refreshTokenValiditySeconds(1800)
 		       .secret("secret");
 		
 		

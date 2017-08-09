@@ -2,14 +2,13 @@ package com.mrinal.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import com.mrinal.exception.UserNotFoundException;
 import com.mrinal.model.ForgotPassword;
 import com.mrinal.model.User;
 import com.mrinal.model.UserDetails;
@@ -28,13 +27,13 @@ public class UserService {
 	
 	
 
-    @Bean
-    public PasswordEncoder getPasswordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder getPasswordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
 
     public void save(User user){
-        user.setPassword(getPasswordEncoder().encode(user.getPassword()));
+        user.setPassword(user.getPassword());
         rp.save(user);
     }
 	
@@ -137,6 +136,30 @@ public class UserService {
 				GenericResponse response =  new GenericResponse("FAILED", "", "Details already exists for user id "+userDetails.getUser().getId());
 			    return new ResponseEntity<GenericResponse>(response,HttpStatus.OK);
 			}
+	}
+	public ResponseEntity<GenericResponse> getUserDetailsById(int userId){
+		User u = (User)rp.findByid(userId);
+        try{  
+        
+        		System.out.println("Inside value range check");
+               if(u == null){
+            	   System.out.println("inside null user check");
+        	       throw new UserNotFoundException("User with id "+userId+" not found",HttpStatus.NOT_FOUND);
+                
+        	}
+        }catch(UserNotFoundException exp){
+        	GenericResponse gr = new GenericResponse("FAILED","",exp.getErrorMsg(),exp.getStatusCode());
+        	return new ResponseEntity<GenericResponse>(gr, HttpStatus.NOT_FOUND);
+        }catch(MethodArgumentTypeMismatchException argExp){
+        	GenericResponse gr = new GenericResponse("FAILED","",argExp.getMessage(),HttpStatus.BAD_REQUEST);
+        	return new ResponseEntity<GenericResponse>(gr, HttpStatus.BAD_REQUEST);
+        }
+       
+        	UserResponse ur = new UserResponse("SUCCESS", "User details fetched successfully", u.getFirstName(), u.getLastName(), u.getEmailId(), u.getPassword(),String.valueOf(u.getId()));
+        	return new ResponseEntity<GenericResponse>(ur, HttpStatus.OK);
+        
+        	
+            	
 	}
 	
 }

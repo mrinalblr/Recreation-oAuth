@@ -14,8 +14,9 @@ public class ResourceServerconfig extends ResourceServerConfigurerAdapter{
 		// TODO Auto-generated method stub
 		http.headers().frameOptions().disable().and()
 		   .authorizeRequests()
-		   .antMatchers("/public").permitAll()
-		   .antMatchers("/private/**","/addUser").authenticated();
+		   .antMatchers("/","/public").permitAll()
+		   .antMatchers("/private","/addUser","/users/getAllUsers","/users/getUserById{}","/users/get-By-emailId","/users/login"
+		   		+ "/users/register","/users/forgotPassword","/users/addUserDetails","/sports/getAllSports","/sports/addSports","/sports/addMyActivity","/sendEmail/testEmail").authenticated();
 	}
 
 }

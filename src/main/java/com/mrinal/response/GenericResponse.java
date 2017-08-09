@@ -1,10 +1,27 @@
 package com.mrinal.response;
 
+import org.springframework.http.HttpStatus;
+
 public class GenericResponse {
 
 	private String status;
 	private String successMessage;
 	private String errorMessage;
+	private HttpStatus statusCode;
+	
+	public GenericResponse(String status, String successMessage, String errorMessage, HttpStatus statusCode) {
+		super();
+		this.status = status;
+		this.successMessage = successMessage;
+		this.errorMessage = errorMessage;
+		this.statusCode = statusCode;
+	}
+	public HttpStatus getStatusCode() {
+		return statusCode;
+	}
+	public void setStatusCode(HttpStatus statusCode) {
+		this.statusCode = statusCode;
+	}
 	public String getStatus() {
 		return status;
 	}
