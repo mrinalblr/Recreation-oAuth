@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.mrinal.model.Sports;
 
-public class SpecificSportsResponse {
+public class SpecificSportsResponse extends GenericResponse {
     
 	private String status;
 	private String successMessage;

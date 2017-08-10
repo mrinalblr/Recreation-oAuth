@@ -15,8 +15,9 @@ public class ResourceServerconfig extends ResourceServerConfigurerAdapter{
 		http.headers().frameOptions().disable().and()
 		   .authorizeRequests()
 		   .antMatchers("/","/public").permitAll()
-		   .antMatchers("/private","/addUser","/users/getAllUsers","/users/getUserById{}","/users/get-By-emailId","/users/login"
-		   		+ "/users/register","/users/forgotPassword","/users/addUserDetails","/sports/getAllSports","/sports/addSports","/sports/addMyActivity","/sendEmail/testEmail").authenticated();
+//		   .antMatchers("/private","/addUser","/users/getAllUsers","/users/getUserById{}","/users/getUserByEmail","/users/login"
+//		   		+ "/users/register","/users/getUser/{userId}","/users/forgotPassword","/users/addUserDetails","/sports/getAllSports","/sports/addSports","/sports/addMyActivity","/sendEmail/testEmail").authenticated();
+		   .antMatchers("/private").authenticated();
 	}
 
 }

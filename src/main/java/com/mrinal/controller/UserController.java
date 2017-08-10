@@ -49,7 +49,7 @@ public class UserController {
 	
 
 	/*Get All Users List from Database*/
-	//@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
+	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(method=RequestMethod.GET,value="/getAllUsers")
 	@ResponseBody
 	public ArrayList<User> getAllUser(){
@@ -59,6 +59,7 @@ public class UserController {
 		
 	}
 	
+	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping("/getUsers")
 	@ResponseBody
 	public List<User> getUser(){
@@ -66,7 +67,7 @@ public class UserController {
 		List<User> u = rp.findUsers();
 		return u;
 	}
-	
+	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(value="/getUser/{userId}")
 	public ResponseEntity<GenericResponse> getUserById(@PathVariable("userId") int userId){
 		
@@ -75,32 +76,34 @@ public class UserController {
 	}
 	
     
-	// @CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
-	  @RequestMapping("/get-by-emailId")
+	  @CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
+	  @RequestMapping("/getUserByEmail")
 	  @ResponseBody
-	  public User getByFirstName(String emailId) {
+	  public ResponseEntity<GenericResponse> getByFirstName(String emailId) {
 	    return us.findUserByEmailId(emailId);
-	  } 
-	//@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
+	  }  
+	  
+	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<UserResponse> login(@RequestBody User user) {
+	public ResponseEntity<GenericResponse> login(@RequestBody User user) {
           return us.loginUser(user);
 	}
 	
-	//@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
+	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<GenericResponse> register(@RequestBody User user) {
 		
 		return us.registerUser(user);
 	}
 	
-	//@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
+	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(value="/forgotPassword",method=RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<ForgotPasswordResponse> forgotPassword(@RequestBody ForgotPassword forgotPassword ){
 	    return us.resetPassword(forgotPassword);	
 	}
 //	user update request
+	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(value="/addUserDetails",method=RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<GenericResponse> addUserDetails(@RequestBody UserDetails userDetails){

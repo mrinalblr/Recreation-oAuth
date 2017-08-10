@@ -17,6 +17,8 @@ import javax.persistence.Table;
 
 
 
+
+
 @Entity(name="USER")
 public class User {
  
@@ -39,6 +41,8 @@ public class User {
    
 	@OneToMany(fetch = FetchType.EAGER , cascade=CascadeType.ALL)
 	private List<Role> roles;
+	
+	
 	
 	public User(String emailId, String password, List<Role> roles) {
 		// TODO Auto-generated constructor stub
@@ -105,8 +109,6 @@ public class User {
 		return id;
 	}
 	
-	
-	
 	public User() {
 		super();
 	}
@@ -117,8 +119,6 @@ public class User {
 		this.lastName=lastName;
 		
 	}
-
-	
 	public void setId(int id) {
 		this.id = id;
 	}

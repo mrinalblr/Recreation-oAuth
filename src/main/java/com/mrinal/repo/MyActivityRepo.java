@@ -1,10 +1,10 @@
 package com.mrinal.repo;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.mrinal.model.MyActivities;
+import com.mrinal.model.MyActivity;
 
-public interface MyActivityRepo extends CrudRepository<MyActivities, Integer> {
+public interface MyActivityRepo extends JpaRepository<MyActivity, Integer>{
 
 	
 }

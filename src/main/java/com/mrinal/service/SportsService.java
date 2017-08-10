@@ -3,14 +3,19 @@ package com.mrinal.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.format.datetime.DateTimeFormatAnnotationFormatterFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.mrinal.model.MyActivities;
+import com.mrinal.exception.RecordNotFoundException;
+import com.mrinal.exception.UserNotFoundException;
+import com.mrinal.model.MyActivity;
 import com.mrinal.model.Sports;
 import com.mrinal.repo.MyActivityRepo;
 import com.mrinal.repo.SportsRepo;
+import com.mrinal.response.GenericResponse;
 import com.mrinal.response.SpecificSportsResponse;
 import com.mrinal.response.SportsResponse;
 
@@ -19,9 +24,10 @@ public class SportsService {
 
 	@Autowired
 	SportsRepo srp;
-	
 	@Autowired
-	MyActivityRepo ar;
+    MyActivityRepo ar;
+
+	
 	public ResponseEntity<SportsResponse> addNewSports(Sports sports){
 		Sports newSports=new Sports();
 		SportsResponse response = null;
@@ -47,28 +53,50 @@ public class SportsService {
 		
 		return new ResponseEntity<SportsResponse>(response, HttpStatus.OK);
 	}
-	public ResponseEntity<SpecificSportsResponse> fetchSpecificSports(Sports sports){
+	public ResponseEntity<GenericResponse> fetchSpecificSports(Sports sports){
 		SpecificSportsResponse response = null;
 		ArrayList<Sports> fetchedSports=null;
 		try{
 			if(sports.getSportsName()!=null){
 				 fetchedSports = srp.findAllBySportsName(sports.getSportsName());
-				 response = new SpecificSportsResponse("SUCCESS","Sports List Fetched Successfully","None",fetchedSports);
+				 if(fetchedSports.size()==0){
+					 throw new RecordNotFoundException("No record found specific to "+sports.getSportsName(), HttpStatus.NOT_FOUND);
+				 }else{
+					 response = new SpecificSportsResponse("SUCCESS","Sports List Fetched Successfully","None",fetchedSports);
 			}
-		}catch(Exception e){
+			}
+		}catch(RecordNotFoundException exp){
+        	GenericResponse gr = new GenericResponse("FAILED","",exp.getErrorMsg(),exp.getStatusCode());
+        	return new ResponseEntity<GenericResponse>(gr, HttpStatus.NOT_FOUND);
+		}
+		catch(Exception e){
 			e.printStackTrace();
 			response = new SpecificSportsResponse("SUCCESS","UNABLE TO FETCH", "FAILURE");
 		}
 		
 		
-		return new ResponseEntity<SpecificSportsResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<GenericResponse>(response, HttpStatus.OK);
 	}
-	public String addNewActivity(Sports sports){
-		Sports s = new Sports();
-		s =srp.findBysportsId(sports.getSportsId());
-		MyActivities activity = new MyActivities(1, s);
-		System.out.println("test"+activity.getSports().getSportsId());
-		ar.save(activity);
-		return "SUCCESS";
+	
+	public ResponseEntity<GenericResponse> addActivity(Sports sports){
+		MyActivity act = new MyActivity();
+		try{
+			act.setActivityId(sports.getSportsId());
+			act.setActivtyName(sports.getSportsName());
+	        act.setActivityHost(sports.getHost());
+	        act.setActivityVenue(sports.getVenue());
+	        act.setActivityDate(sports.getDate());
+	        act.setActivityTime(sports.getTime());
+	        act.setActivityDescription(sports.getDescription());
+	        act.setStatus("ACTIVE");
+        ar.save(act);
+		}catch(DataIntegrityViolationException d){
+			GenericResponse gr = new GenericResponse("FAILURE","","Duplicate entry not allowed",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<GenericResponse>(gr,HttpStatus.BAD_REQUEST);
+		}
+        GenericResponse gr = new GenericResponse("SUCCESS","","",HttpStatus.CREATED);
+        		
+		return new ResponseEntity<GenericResponse>(gr,HttpStatus.OK);
 	}
+	
 }

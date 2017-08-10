@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mrinal.model.Sports;
 import com.mrinal.repo.SportsRepo;
+import com.mrinal.response.GenericResponse;
 import com.mrinal.response.SpecificSportsResponse;
 import com.mrinal.response.SportsResponse;
 import com.mrinal.response.UserResponse;
@@ -31,15 +32,11 @@ public class SportsController {
 	//@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(value="/getAllSports",method =RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<SpecificSportsResponse> getSports(@RequestBody Sports sports){
+	public ResponseEntity<GenericResponse> getSports(@RequestBody Sports sports){
 	
 		return ss.fetchSpecificSports(sports);
 	}
 	
-	
-	
-	
-//	main.....
 	//@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(value="/addSports",method =RequestMethod.POST)
 	@ResponseBody
@@ -47,11 +44,19 @@ public class SportsController {
 		
 		return ss.addNewSports(sports);
 	}
-	
+	/* Adds users shortlisted/liked/loved activity from sports to the myActivities. 
+	 * */
+	//@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(value="/addMyActivity",method=RequestMethod.POST)
 	@ResponseBody
 	public String addMyActivity(@RequestBody Sports sports){
-	  return ss.addNewActivity(sports);
+	  return null;
 		
 	}
+	@RequestMapping(value="/joinSport")
+	public ResponseEntity<GenericResponse> joinSport(@RequestBody Sports sports){
+		return ss.addActivity(sports);
+		
+	}
+
 }

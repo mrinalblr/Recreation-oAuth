@@ -29,9 +29,7 @@ public class Sports {
 	private String time;
 	@Column(name="SPORTS_DESCRIPTION")
 	private String description;
-	@OneToOne(mappedBy = "sports", cascade = CascadeType.ALL, 
-            fetch = FetchType.LAZY, optional = false)
-	private MyActivities myActivities;
+	
 	public int getSportsId() {
 		return sportsId;
 	}

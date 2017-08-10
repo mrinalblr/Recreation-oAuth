@@ -91,7 +91,7 @@ public class UserService {
 			return new ResponseEntity<ForgotPasswordResponse>(response,HttpStatus.OK);
 		}
 	}
-	public ResponseEntity<UserResponse> loginUser(User user){
+	public ResponseEntity<GenericResponse> loginUser(User user){
 		User newUser = new User();
         UserResponse response =null;
         String userId="";
@@ -100,19 +100,16 @@ public class UserService {
 	    	    newUser=(User)rp.findByemailId(user.getEmailId());
 	    	    userId = String.valueOf(newUser.getId());
 	             response= new UserResponse("SUCCESS","Successfully loggedIn",newUser.getFirstName(),newUser.getLastName(),
-	        		 newUser.getEmailId(),"",userId);
+	        		 newUser.getEmailId(),newUser.getPassword(),userId);
 	    }
-	    
-        }
-        catch(Exception e){
-      	  response = new UserResponse("FAILURE","Unable to login");
-      	  return new ResponseEntity<UserResponse>(response, HttpStatus.OK);
-        }
-
-	   
-	    return new ResponseEntity<UserResponse>(response, HttpStatus.OK);
+        }catch(Exception e){
+            	GenericResponse gr = new GenericResponse("FAILED","",e.getMessage(),HttpStatus.BAD_REQUEST);
+            	return new ResponseEntity<GenericResponse>(gr, HttpStatus.BAD_REQUEST);
+            }
+	    return new ResponseEntity<GenericResponse>(response, HttpStatus.OK);
+   
 	}
-	public User findUserByEmailId(String emailId){
+	public ResponseEntity<GenericResponse> findUserByEmailId(String emailId){
 		String userId = "";
 	    User user=null;
 	    try {
@@ -120,10 +117,12 @@ public class UserService {
 	       userId = String.valueOf(user.getId());
 	      // user = (User) rp.findAll();
 	    }
-	    catch (Exception ex) {
-	      
-	    }
-	    return user;
+	    catch(Exception e ){
+        	GenericResponse gr = new GenericResponse("FAILED","",e.getMessage(),HttpStatus.BAD_REQUEST);
+        	return new ResponseEntity<GenericResponse>(gr, HttpStatus.BAD_REQUEST);
+        }
+	    UserResponse ur = new UserResponse("SUCCESS","user fetched successfully", user.getFirstName(), user.getLastName(), user.getEmailId(), user.getPassword(), userId);
+	    return new ResponseEntity<GenericResponse>(ur, HttpStatus.FOUND);
 	}
 
 	public ResponseEntity<GenericResponse> addUserDetails(UserDetails userDetails) {
@@ -135,7 +134,10 @@ public class UserService {
 			}catch(DataIntegrityViolationException d){
 				GenericResponse response =  new GenericResponse("FAILED", "", "Details already exists for user id "+userDetails.getUser().getId());
 			    return new ResponseEntity<GenericResponse>(response,HttpStatus.OK);
-			}
+			}catch(Exception e ){
+	        	GenericResponse gr = new GenericResponse("FAILED","",e.getMessage(),HttpStatus.BAD_REQUEST);
+	        	return new ResponseEntity<GenericResponse>(gr, HttpStatus.BAD_REQUEST);
+	        }
 	}
 	public ResponseEntity<GenericResponse> getUserDetailsById(int userId){
 		User u = (User)rp.findByid(userId);
@@ -152,6 +154,9 @@ public class UserService {
         	return new ResponseEntity<GenericResponse>(gr, HttpStatus.NOT_FOUND);
         }catch(MethodArgumentTypeMismatchException argExp){
         	GenericResponse gr = new GenericResponse("FAILED","",argExp.getMessage(),HttpStatus.BAD_REQUEST);
+        	return new ResponseEntity<GenericResponse>(gr, HttpStatus.BAD_REQUEST);
+        }catch(Exception e ){
+        	GenericResponse gr = new GenericResponse("FAILED","",e.getMessage(),HttpStatus.BAD_REQUEST);
         	return new ResponseEntity<GenericResponse>(gr, HttpStatus.BAD_REQUEST);
         }
        
