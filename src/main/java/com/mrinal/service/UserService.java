@@ -24,6 +24,10 @@ public class UserService {
 	UserRepo rp;
 	@Autowired
 	UserDetailsRepo udrp;
+	@Autowired
+	User userT;
+	@Autowired
+	User user;
 	
 	
 
@@ -38,19 +42,19 @@ public class UserService {
     }
 	
 	public ResponseEntity<GenericResponse> registerUser(User user){
-		User newUser = new User();
+		
         GenericResponse response =null;
         String userId="";
         try{
 	          if (user != null) {
-	        			 newUser.setFirstName(user.getFirstName());
-	    	    	     newUser.setLastName(user.getLastName());
-	    	    	     newUser.setEmailId(user.getEmailId());
-	    	             newUser.setPassword(user.getPassword());
-	    	             rp.save(newUser);
-	    	             userId = String.valueOf(newUser.getId());
-	    	             response= new UserResponse("SUCCESS","Successfully registered",newUser.getFirstName(),newUser.getLastName(),
-	    	        		 newUser.getEmailId(),userId); 
+	        	  userT.setFirstName(user.getFirstName());
+	        	  userT.setLastName(user.getLastName());
+	        	  userT.setEmailId(user.getEmailId());
+	    	    	     userT.setPassword(user.getPassword());
+	    	             rp.save(userT);
+	    	             userId = String.valueOf(userT.getId());
+	    	             response= new UserResponse("SUCCESS","Successfully registered",userT.getFirstName(),userT.getLastName(),
+	    	            		 userT.getEmailId(),userId); 
 	        	 }
 	    
         }
@@ -69,16 +73,15 @@ public class UserService {
 	
 	public ResponseEntity<ForgotPasswordResponse> resetPassword(ForgotPassword forgotPassword){
 		ForgotPasswordResponse response = null;
-		User u1 =new User();
-		User user = new User();
-		u1 = (User) rp.findByemailId(forgotPassword.getEmailId());
-		if(forgotPassword.getOldPassword().equals(u1.getPassword())){
+		
+		userT = (User) rp.findByemailId(forgotPassword.getEmailId());
+		if(forgotPassword.getOldPassword().equals(userT.getPassword())){
 		if(forgotPassword.getNewPassword().equals(forgotPassword.getConfirmNewPassword())){
-			user.setEmailId(u1.getEmailId());
-			user.setFirstName(u1.getFirstName());
-			user.setLastName(u1.getLastName());
+			user.setEmailId(userT.getEmailId());
+			user.setFirstName(userT.getFirstName());
+			user.setLastName(userT.getLastName());
 			user.setPassword(forgotPassword.getNewPassword());
-			user.setId(u1.getId());
+			user.setId(userT.getId());
 			rp.save(user);
 			response = new ForgotPasswordResponse("SUCCESS","Password changed Successfully","");
 			return new ResponseEntity<ForgotPasswordResponse>(response, HttpStatus.CREATED);
@@ -92,15 +95,15 @@ public class UserService {
 		}
 	}
 	public ResponseEntity<GenericResponse> loginUser(User user){
-		User newUser = new User();
+		User userT = new User();
         UserResponse response =null;
         String userId="";
         try{
 	          if (user.getEmailId() != null) {
-	    	    newUser=(User)rp.findByemailId(user.getEmailId());
-	    	    userId = String.valueOf(newUser.getId());
-	             response= new UserResponse("SUCCESS","Successfully loggedIn",newUser.getFirstName(),newUser.getLastName(),
-	        		 newUser.getEmailId(),newUser.getPassword(),userId);
+	        	  userT=(User)rp.findByemailId(user.getEmailId());
+	    	    userId = String.valueOf(userT.getId());
+	             response= new UserResponse("SUCCESS","Successfully loggedIn",userT.getFirstName(),userT.getLastName(),
+	            		 userT.getEmailId(),userT.getPassword(),userId);
 	    }
         }catch(Exception e){
             	GenericResponse gr = new GenericResponse("FAILED","",e.getMessage(),HttpStatus.BAD_REQUEST);
@@ -111,7 +114,7 @@ public class UserService {
 	}
 	public ResponseEntity<GenericResponse> findUserByEmailId(String emailId){
 		String userId = "";
-	    User user=null;
+	   
 	    try {
 	       user = rp.findByemailId(emailId);
 	       userId = String.valueOf(user.getId());
@@ -140,11 +143,11 @@ public class UserService {
 	        }
 	}
 	public ResponseEntity<GenericResponse> getUserDetailsById(int userId){
-		User u = (User)rp.findByid(userId);
+		userT = (User)rp.findByid(userId);
         try{  
         
         		System.out.println("Inside value range check");
-               if(u == null){
+               if(userT == null){
             	   System.out.println("inside null user check");
         	       throw new UserNotFoundException("User with id "+userId+" not found",HttpStatus.NOT_FOUND);
                 
@@ -160,7 +163,7 @@ public class UserService {
         	return new ResponseEntity<GenericResponse>(gr, HttpStatus.BAD_REQUEST);
         }
        
-        	UserResponse ur = new UserResponse("SUCCESS", "User details fetched successfully", u.getFirstName(), u.getLastName(), u.getEmailId(), u.getPassword(),String.valueOf(u.getId()));
+        	UserResponse ur = new UserResponse("SUCCESS", "User details fetched successfully", userT.getFirstName(), userT.getLastName(), userT.getEmailId(), userT.getPassword(),String.valueOf(userT.getId()));
         	return new ResponseEntity<GenericResponse>(ur, HttpStatus.OK);
         
         	

@@ -16,9 +16,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
-
-
-
 @Entity(name="USER")
 public class User {
  
