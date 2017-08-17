@@ -9,33 +9,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mrinal.model.Music;
+import com.mrinal.model.RoadTrips;
 import com.mrinal.response.GenericResponse;
-import com.mrinal.service.MusicService;
+import com.mrinal.service.RoadTripsService;
 
 @RestController
-@RequestMapping("/music")
-public class MusicController {
-
+@RequestMapping("/roadTrips")
+public class RoadTripsController {
+	
 	@Autowired
-	MusicService ms;
-	
+	RoadTripsService rts;
+
 	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
-	@RequestMapping(value="/addMusic",method=RequestMethod.POST)
+	@RequestMapping(value="/addRoadTrips",method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<GenericResponse> addMusicActivity(@RequestBody Music music){
-	
-		return ms.addMusicActivity(music);
-		 
+	public ResponseEntity<GenericResponse> addRoadTrips(@RequestBody RoadTrips trips){
+		
+		return rts.addTrips(trips);
 	}
-	
 	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
-	@RequestMapping(value="/getAllMusic",method=RequestMethod.POST)
+	@RequestMapping(value="/getAllTrips",method=RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<GenericResponse> getAllMusic(@RequestBody Music music){
-		return ms.fetchAllMusic(music);
+	public ResponseEntity<GenericResponse> fetchAllTrips(){
+		return rts.fetchAllTrips();
 	}
-	
 	
 	
 }

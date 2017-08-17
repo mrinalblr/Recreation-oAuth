@@ -12,16 +12,22 @@ public class Music {
 	@GeneratedValue
 	@Column(name="MUSIC_ID")
 	private int musicId;
+	
 	@Column(name="MUSIC_NAME")
-	private String MusicName;
+	private String musicName;
+	
 	@Column(name="MUSIC_VENUE")
 	private String venue;
+	
 	@Column(name="MUSIC_HOST")
 	private String host;
+	
 	@Column(name="MUSIC_DATE")
 	private String date;
+	
 	@Column(name="MUSIC_TIME")
 	private String time;
+	
 	@Column(name="MUSIC_DESC")
 	private String description;
 	public Music() {
@@ -30,7 +36,7 @@ public class Music {
 	}
 	public Music(String musicName, String venue, String host, String date, String time, String description) {
 		super();
-		MusicName = musicName;
+		this.musicName = musicName;
 		this.venue = venue;
 		this.host = host;
 		this.date = date;
@@ -44,10 +50,10 @@ public class Music {
 		this.musicId = musicId;
 	}
 	public String getMusicName() {
-		return MusicName;
+		return musicName;
 	}
 	public void setMusicName(String musicName) {
-		MusicName = musicName;
+		this.musicName = musicName;
 	}
 	public String getVenue() {
 		return venue;
