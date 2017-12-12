@@ -29,7 +29,7 @@ public class SportsController {
 	SportsService ss;
 	
 	
-	//@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
+	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(value="/getAllSports",method =RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<GenericResponse> getSports(@RequestBody Sports sports){
@@ -37,7 +37,7 @@ public class SportsController {
 		return ss.fetchSpecificSports(sports);
 	}
 	
-	//@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
+	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(value="/addSports",method =RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<SportsResponse> addSports(@RequestBody Sports sports){
@@ -46,14 +46,16 @@ public class SportsController {
 	}
 	/* Adds users shortlisted/liked/loved activity from sports to the myActivities. 
 	 * */
-	//@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
+	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(value="/addMyActivity",method=RequestMethod.POST)
 	@ResponseBody
 	public String addMyActivity(@RequestBody Sports sports){
 	  return null;
 		
 	}
+	@CrossOrigin(origins = "http://localhost:8100", maxAge = 7200)
 	@RequestMapping(value="/joinSport")
+	@ResponseBody
 	public ResponseEntity<GenericResponse> joinSport(@RequestBody Sports sports){
 		return ss.addActivity(sports);
 		

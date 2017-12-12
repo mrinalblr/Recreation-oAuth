@@ -13,6 +13,7 @@ import com.mrinal.model.Sports;
 import com.mrinal.model.Trekking;
 import com.mrinal.model.User;
 import com.mrinal.model.UserDetails;
+import com.mrinal.response.GenericResponse;
 
 @Configuration
 public class RecreationBean {
@@ -55,4 +56,9 @@ public class RecreationBean {
 	public UserDetails getUserDetails(){
 		return new UserDetails();
 	}
+	@Bean
+	public GenericResponse getGenericResponse(){
+		return new GenericResponse();
+	}
+	
 }

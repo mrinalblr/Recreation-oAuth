@@ -14,29 +14,36 @@ public class RoadTrips {
 	private int trip_Id;
 	@Column(name="TRIP_NAME")
 	private String tripName;
+	@Column(name="TRIP_ORIGIN")
+	private String origin;
+	@Column(name="TRIP_DESTINATION")
+	private String destination;
 	@Column(name="TRIP_HOST")
-	private String tripHost;
-	@Column(name="TRIP_LOCATION")
-	private String tripLocation;
+	private String host;
+	@Column(name="TRIP_TYPE")
+	private String tripType;
 	@Column(name="TRIP_DATE")
-	private String tripDate;
+	private String date;
 	@Column(name="TRIP_TIME")
-	private String tripTime;
+	private String time;
 	@Column(name="TRIP_DESC")
-	private String tripDesc;
+	private String description;
+	
+	public RoadTrips(String tripName, String origin, String destination, String host, String tripType,
+			String date, String time, String description) {
+		super();
+		this.tripName = tripName;
+		this.origin = origin;
+		this.destination = destination;
+		this.host = host;
+		this.tripType = tripType;
+		this.date = date;
+		this.time = time;
+		this.description = description;
+	}
 	public RoadTrips() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-	public RoadTrips(String tripName, String tripHost, String tripLocation, String tripDate, String tripTime,
-			String tripDesc) {
-		super();
-		this.tripName = tripName;
-		this.tripHost = tripHost;
-		this.tripLocation = tripLocation;
-		this.tripDate = tripDate;
-		this.tripTime = tripTime;
-		this.tripDesc = tripDesc;
 	}
 	public String getTripName() {
 		return tripName;
@@ -44,36 +51,46 @@ public class RoadTrips {
 	public void setTripName(String tripName) {
 		this.tripName = tripName;
 	}
-	public String getTripHost() {
-		return tripHost;
+	public String getOrigin() {
+		return origin;
 	}
-	public void setTripHost(String tripHost) {
-		this.tripHost = tripHost;
+	public void setOrigin(String origin) {
+		this.origin = origin;
 	}
-	public String getTripLocation() {
-		return tripLocation;
+	public String getDestination() {
+		return destination;
 	}
-	public void setTripLocation(String tripLocation) {
-		this.tripLocation = tripLocation;
+	public void setDestination(String destination) {
+		this.destination = destination;
 	}
-	public String getTripDate() {
-		return tripDate;
+	public String getHost() {
+		return host;
 	}
-	public void setTripDate(String tripDate) {
-		this.tripDate = tripDate;
+	public void setHost(String host) {
+		this.host = host;
 	}
-	public String getTripTime() {
-		return tripTime;
+	public String getTripType() {
+		return tripType;
 	}
-	public void setTripTime(String tripTime) {
-		this.tripTime = tripTime;
+	public void setTripType(String tripType) {
+		this.tripType = tripType;
 	}
-	public String getTripDesc() {
-		return tripDesc;
+	public String getDate() {
+		return date;
 	}
-	public void setTripDesc(String tripDesc) {
-		this.tripDesc = tripDesc;
+	public void setDate(String date) {
+		this.date = date;
 	}
-	
-	
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
