@@ -1,5 +1,8 @@
 package com.mrinal.service;
 
+
+//@Author Mrinal Gupta.
+
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +30,7 @@ public class SportsService {
 	@Autowired
     MyActivityRepo ar;
 
-	
+	//Adds new Sports into the sports table.
 	public ResponseEntity<SportsResponse> addNewSports(Sports sports){
 		Sports newSports=new Sports();
 		SportsResponse response = null;

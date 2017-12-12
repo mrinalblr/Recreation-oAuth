@@ -1,6 +1,6 @@
 package com.mrinal.service;
 
-
+//@Author Mrinal Gupta.
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,7 @@ public class RoadTripsService {
 	@Autowired
 	GenericResponse gResponse;
 	
+	//Adds the trips into the roadtrips table.
 	public ResponseEntity<GenericResponse> addTrips(RoadTrips trips){
 		try{
 			System.out.println(trips.getDescription());
