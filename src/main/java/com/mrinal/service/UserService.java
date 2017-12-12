@@ -18,6 +18,7 @@ import com.mrinal.response.ForgotPasswordResponse;
 import com.mrinal.response.GenericResponse;
 import com.mrinal.response.UserResponse;
 
+//@Author : Mrinal Gupta.
 @Service
 public class UserService {
 	@Autowired
@@ -31,11 +32,8 @@ public class UserService {
 	
 	
 
-//    @Bean
-//    public PasswordEncoder getPasswordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
 
+// Saves user details in Database.
     public void save(User user){
         user.setPassword(user.getPassword());
         rp.save(user);
@@ -70,7 +68,7 @@ public class UserService {
 	   
 	    return new ResponseEntity<GenericResponse>(response, HttpStatus.OK);
 	}
-	
+	//Method to reset the password in case of forgot password aPI call.
 	public ResponseEntity<ForgotPasswordResponse> resetPassword(ForgotPassword forgotPassword){
 		ForgotPasswordResponse response = null;
 		
